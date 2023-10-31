@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+ * @brief 
+ *
+*/
 // Define an appropriate struct
 typedef struct {
 	char date[11];
@@ -10,6 +14,15 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
+/*
+ * @brief
+ *
+ * @param input 
+ * @param delimiter
+ * @param date
+ * @param time
+ * @param steps
+*/
 
 
 
@@ -43,12 +56,27 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-    char filename [] = "FitnessData_2023.csv";
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        perror("");
-        return 1;
+    FITNESS_DATA data[100];
+    int buffer_size = 250;
+    char line[buffer_size];
+    int counter=0;
+
+    FILE *input = fopen("FitnessData_2023.csv", "r");
+
+    char date[10];
+    char time[5];
+    char steps[2000];
+
+    while (fgets(line, buffer_size, input))
+    {   
+        tokeniseRecord(line,"/",date, time, steps);
+        strcpy(data[counter].date,date);
+        strcpy(data[counter].time,time);
+        data[counter].steps = atoi(steps);
+        counter++;
     }
-
-
+    printf("Number of records in file: %d\n", counter);
+    printf("%s\n", FITNESS_DATA[0]);
+    printf("%s\n", FITNESS_DATA[1]);
+    printf("%s\n", FITNESS_DATA[2]);
 }
