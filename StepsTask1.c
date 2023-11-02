@@ -65,7 +65,7 @@ int main() {
 
     char date[10];
     char time[5];
-    char steps[2000];
+    char steps[4];
 
     while (fgets(line, buffer_size, input))
     {   
@@ -76,8 +76,6 @@ int main() {
         counter++;
     }
     printf("Number of records in file: %d\n", counter);
-    printf("%s\n", data[0]);
-    printf("%s\n", data[1]);
-    printf("%s\n", data[2]);
+    printf("%d", date[0]);
     return 0;
 }
