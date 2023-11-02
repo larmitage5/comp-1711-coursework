@@ -11,8 +11,13 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
-
-
+/**
+ * @param input the line from the file
+ * @param delimeter the comma that splits up the data
+ * @param date pointer for where the date should be stored
+ * @param time pointer for where the time should be stored
+ * @param steps pointer for where steps should be stored
+*/
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
