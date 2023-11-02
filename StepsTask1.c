@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/**
- * @brief Holds the data 
- *
- */
 
 // Define an appropriate struct
 typedef struct {
@@ -15,15 +11,7 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
-/**
- * @brief splits line from fitnessdata_2023.csv
- *
- * @param input the line which will be split
- * @param delimiter the character which deliminates (splits up) the data
- * @param date a pointer to where it should store the date
- * @param time a pointer to where it should store the time
- * @param steps a pointer to where it should store the steps
- */
+
 
 
 // This is your helper function. Do not change it in any way.
@@ -63,19 +51,21 @@ int main() {
 
     FILE *input = fopen("FitnessData_2023.csv", "r");
 
-    char date[10];
-    char time[5];
-    char steps[4];
+    char date[100];
+    char time[100];
+    char steps[100];
 
     while (fgets(line, buffer_size, input))
     {   
-        tokeniseRecord(line,"/",date,time,steps);
+        tokeniseRecord(line,",",date,time,steps);
         strcpy(data[counter].date,date);
         strcpy(data[counter].time,time);
         data[counter].steps = atoi(steps);
         counter++;
     }
     printf("Number of records in file: %d\n", counter);
-    printf("%d", date[0]);
+    for (int i=0; i<3; i++){
+        printf("%s/%s/%d\n", data[i].date, data[i].time, data[i].steps);
+    }
     return 0;
 }
