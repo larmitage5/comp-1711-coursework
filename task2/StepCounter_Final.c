@@ -42,18 +42,58 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-   char a = "A"
-   printf("Enter option: ");
-   scanf("%s", a);
 
-   switch (a) {
-    case chara A: printf("Option A\n");
-    break;
+    FITNESS_DATA data[100];
+    int buffer_size = 250;
+    char line[buffer_size];
+    int counter=0;
 
-    default: printf("No option selected\n");
+    FILE *input = fopen("FitnessData_2023.csv", "r");
 
-   }
-   return 0;
+    char date[100];
+    char time[100];
+    char steps[100];
+
+    while (fgets(line, buffer_size, input))
+    {   
+        tokeniseRecord(line,",",date,time,steps);
+        strcpy(data[counter].date,date);
+        strcpy(data[counter].time,time);
+        data[counter].steps = atoi(steps);
+        counter++;
+    }
+    
+    printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
+
+    char a,filename;
+
+    printf("Enter character: ");
+    scanf("%c", &a);
+
+    if (a == 'A') {
+        printf("Input filename: \n");
+        scanf("%s", &filename);
+    }
+    if (a == 'B') {
+        printf("Number of records in file: %d\n", counter);
+    }
+    if (a == 'C') {
+        printf("Option C selected\n");
+    }
+    if (a == 'D') {
+        printf("Option D selected\n");
+    }
+    if (a == 'E') {
+        printf("Option E selected\n");
+    }
+    if (a == 'F') {
+        printf("Option F selected\n");
+    }
+    if (a == 'Q') {
+    }
+    
+
+    return 0;
 }
 
 
