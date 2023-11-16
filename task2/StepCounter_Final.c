@@ -59,6 +59,10 @@ int main() {
     int b;
     int mean;
     int sum=0;
+    int over[100];
+    int c;
+    int maxc = 0;
+    int d;
 
     while(1)
     {
@@ -134,7 +138,23 @@ int main() {
 
             case 'F':
             case 'f':
-
+                for(i=0;i<counter;i++){
+                    if(data[i].steps>500){
+                        for(d=0;d<counter;d++){
+                            over[d] = i;
+                        }
+                    c = over[d+1] - over[d];
+                    if (c>maxc){
+                        maxc = c;
+                    }
+                    if((over[d+1] - over[d])==maxc){
+                        printf("Longest period start: %s %s\n", data[d].date, data[d].time);
+                        printf("Longest period end: %s %s\n", data[d+1].date, data[d+1].time);
+                    }
+                    }
+                }
+                break;
+                
             case 'Q':
             case 'q':
                 return 0;
