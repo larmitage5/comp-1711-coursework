@@ -59,10 +59,12 @@ int main() {
     int b;
     int mean;
     int sum=0;
-    int over[100];
-    int c;
-    int maxc = 0;
-    int d;
+    int arr[100];
+    int c = 1;
+    int maxc;
+    int length = 0;
+    int start;
+    int end;
 
     while(1)
     {
@@ -138,23 +140,37 @@ int main() {
 
             case 'F':
             case 'f':
+                // create array with line numbers above 500
                 for(i=0;i<counter;i++){
                     if(data[i].steps>500){
-                        for(d=0;d<counter;d++){
-                            over[d] = i;
-                        }
-                    c = over[d+1] - over[d];
-                    if (c>maxc){
-                        maxc = c;
-                    }
-                    if((over[d+1] - over[d])==maxc){
-                        printf("Longest period start: %s %s\n", data[d].date, data[d].time);
-                        printf("Longest period end: %s %s\n", data[d+1].date, data[d+1].time);
-                    }
+                        arr[length] = i;
+                        length += 1;  
                     }
                 }
+                for(i=1;i<counter;i++){
+                    if (arr[i-1] == (arr[i]-1)){
+                        c += 1;
+                    }
+                    else{
+                        c = 1;
+                    }
+                    // finds length of longest consecutive sequence
+                    if (c>maxc){
+                        maxc=c;
+                    }
+                }
+                maxc = maxc-1;
+                for(i=1;i<counter;i++){
+                    // check that they are consecutive and difference is correct
+                    if(arr[i+maxc] == arr[i]+maxc){
+                        start = arr[i];
+                        end = arr[i+maxc];
+                    }
+                }
+                printf("Longest period start: %s %s\n", data[start].date, data[start].time);
+                printf("Longest period end: %s %s\n", data[end].date, data[end].time);
                 break;
-                
+
             case 'Q':
             case 'q':
                 return 0;
