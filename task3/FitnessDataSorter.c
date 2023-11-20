@@ -27,14 +27,52 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *s
 
 
 int main() {
+    FITNESS_DATA data[100];
+    int buffer_size = 250;
+    char line[buffer_size];
+    int counter=0;
+
     printf("Enter Filename:");
     fgets(line, buffer_size, stdin);
     sscanf(line, " %s ", filename);
     FILE *input = fopen(filename, "r");
     if (!input)
     {
-        printf("Error: File could not be opened\n");
+        printf("Error: invalid file\n");
         return 1;
     }
+    char date[100];
+    char time[100];
+    char steps[100];
+
+    while (fgets(line, buffer_size, input))
+    {   
+        tokeniseRecord(line,",",date,time,steps);
+        strcpy(data[counter].date,date);
+        strcpy(data[counter].time,time);
+        data[counter].steps = atoi(steps);
+        counter++;
+    }
     
+    int arr[];
+    int max = 0;
+    int a = 0;
+    int i;
+
+    for (i = 0;i<counter;i++){
+        if data[i].steps>max;
+        max = data[i].steps;
+        arr[a] = i;
+        a += 1;
+    }
+
+    FILE *file = fopen(filename.tsv, "r+");
+    if (file == NULL) {
+        perror("");
+        return 1;
+    }
+    for (i=0;i<counter;i++){
+        fprintf("%s %s %d", data[arr[i]].date, data[arr[i]].time, data[arr[i]].steps);
+    }
+    return 0;
 }
