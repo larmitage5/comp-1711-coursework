@@ -57,7 +57,8 @@ int main() {
     int i = 0;
     int a;
     int b;
-    int mean;
+    float mean;
+    int meanint;
     int sum=0;
     int arr[100];
     int c = 1;
@@ -72,25 +73,22 @@ int main() {
 
         choice = getchar();
         while(getchar() != '\n');
-
         switch(choice)
         {
             case 'A':
-            case 'a':
                 printf("Input filename:\n");
                 fgets(line, buffer_size, stdin);
                 sscanf(line, " %s ", filename);
                 FILE *input = fopen(filename, "r");
                 if (!input)
                 {
-                    printf("Error: File could not be opened\n");
+                    printf("Error: Could not find or open the file.\n");
                     return 1;
                 }
-                printf("File successfully loaded\n");
+                printf("File successfully loaded.\n");
                 break;
 
             case 'B':
-            case 'b':
                 while (fgets(line, buffer_size, input))
                 {   
                     tokeniseRecord(line,",",date,time,steps);
@@ -99,12 +97,19 @@ int main() {
                     data[counter].steps = atoi(steps);
                     counter++;
                 }
-                printf("Number of records in file: %d\n", counter);
+                printf("Total records: %d\n", counter);
                 break;
 
             case 'C':
-            case 'c':
-                min = data[1].steps;
+                while (fgets(line, buffer_size, input))
+                {   
+                    tokeniseRecord(line,",",date,time,steps);
+                    strcpy(data[counter].date,date);
+                    strcpy(data[counter].time,time);
+                    data[counter].steps = atoi(steps);
+                    counter++;
+                }
+                min = data[0].steps;
                 for(i = 0; i<counter; i++)
                 {
                     if (data[i].steps<min)
@@ -113,11 +118,18 @@ int main() {
                         a = i;
                     }
                 }
-                printf("Fewest steps: %s, %s\n", data[a].date, data[a].time);
+                printf("Fewest steps: %s %s\n", data[a].date, data[a].time);
                 break;
 
             case 'D':
-            case 'd':
+                while (fgets(line, buffer_size, input))
+                {   
+                    tokeniseRecord(line,",",date,time,steps);
+                    strcpy(data[counter].date,date);
+                    strcpy(data[counter].time,time);
+                    data[counter].steps = atoi(steps);
+                    counter++;
+                }
                 for(i = 0; i<counter; i++)
                 {
                     if (data[i].steps>max)
@@ -126,20 +138,36 @@ int main() {
                         b = i;
                     }
                 }
-                printf("Largest steps: %s, %s\n", data[b].date, data[b].time);
+                printf("Largest steps: %s %s\n", data[b].date, data[b].time);
                 break;
+
             case 'E':
-            case 'e':
+                while (fgets(line, buffer_size, input))
+                {   
+                    tokeniseRecord(line,",",date,time,steps);
+                    strcpy(data[counter].date,date);
+                    strcpy(data[counter].time,time);
+                    data[counter].steps = atoi(steps);
+                    counter++;
+                }
                 for(i = 0; i<counter; i++)
                 {
                     sum = sum + data[i].steps;
                 }
                 mean = sum/counter;
-                printf("Mean step count: %d\n", mean);
+                meanint = (int)mean;
+                printf("Mean step count: %d\n", meanint);
                 break;
 
             case 'F':
-            case 'f':
+                while (fgets(line, buffer_size, input))
+                {   
+                    tokeniseRecord(line,",",date,time,steps);
+                    strcpy(data[counter].date,date);
+                    strcpy(data[counter].time,time);
+                    data[counter].steps = atoi(steps);
+                    counter++;
+                }
                 // create array with line numbers above 500
                 for(i=0;i<counter;i++){
                     if(data[i].steps>500){
@@ -172,12 +200,11 @@ int main() {
                 break;
 
             case 'Q':
-            case 'q':
                 return 0;
                 break;
 
             default:
-                printf("Invalid choice\n");
+                printf("Invalid choice. Try again.\n");
                 break;
 
         }
