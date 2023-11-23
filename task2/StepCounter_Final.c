@@ -1,6 +1,8 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "FitnessDataStruct.h"
 
 // Struct moved to header file
@@ -52,13 +54,12 @@ int main() {
     char date[100];
     char time[100];
     char steps[100];
-    int min;
+    int min = 1000000;
     int max = 0;
     int i = 0;
     int a;
     int b;
-    float mean;
-    int meanint;
+    float meanf;
     int sum=0;
     int arr[100];
     int c = 1;
@@ -66,17 +67,19 @@ int main() {
     int length = 0;
     int start;
     int end;
+    int mean;
+    int meanint;
 
     while(1)
     {
         printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
-
+        printf("Enter choice: ");
         choice = getchar();
         while(getchar() != '\n');
         switch(choice)
         {
             case 'A':
-                printf("Input filename:\n");
+                printf("Input filename: ");
                 fgets(line, buffer_size, stdin);
                 sscanf(line, " %s ", filename);
                 FILE *input = fopen(filename, "r");
@@ -109,7 +112,6 @@ int main() {
                     data[counter].steps = atoi(steps);
                     counter++;
                 }
-                min = data[0].steps;
                 for(i = 0; i<counter; i++)
                 {
                     if (data[i].steps<min)
@@ -154,9 +156,9 @@ int main() {
                 {
                     sum = sum + data[i].steps;
                 }
-                mean = sum/counter;
-                meanint = (int)mean;
-                printf("Mean step count: %d\n", meanint);
+                float counterf = counter;
+                mean = round((sum/counterf));
+                printf("Mean step count: %d\n", mean);
                 break;
 
             case 'F':
@@ -211,12 +213,3 @@ int main() {
     }
     return 0;
 }
-
-
-
-
-
-
-
-
-
