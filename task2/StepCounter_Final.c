@@ -67,7 +67,7 @@ int main() {
     int length = 0;
     int start;
     int end;
-    int mean;
+    float mean;
     int meanint;
 
     while(1)
@@ -112,6 +112,7 @@ int main() {
                     data[counter].steps = atoi(steps);
                     counter++;
                 }
+                a = 0;
                 for(i = 0; i<counter; i++)
                 {
                     if (data[i].steps<min)
@@ -157,8 +158,9 @@ int main() {
                     sum = sum + data[i].steps;
                 }
                 float counterf = counter;
-                mean = round((sum/counterf));
-                printf("Mean step count: %d\n", mean);
+                mean = (sum/counterf);
+                meanint = (int)(mean+0.5);
+                printf("Mean step count:%d\n", meanint);
                 break;
 
             case 'F':
