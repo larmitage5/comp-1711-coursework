@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "FitnessDataStruct.h"
 
 // Define the struct for the fitness data
 typedef struct {
@@ -30,17 +31,8 @@ int main() {
     FITNESS_DATA data[100];
     int buffer_size = 250;
     char line[buffer_size];
+    char filename[buffer_size];
     int counter=0;
-
-    printf("Enter Filename:");
-    fgets(line, buffer_size, stdin);
-    sscanf(line, " %s ", filename);
-    FILE *input = fopen(filename, "r");
-    if (!input)
-    {
-        printf("Error: invalid file\n");
-        return 1;
-    }
     char date[100];
     char time[100];
     char steps[100];
@@ -53,17 +45,29 @@ int main() {
         data[counter].steps = atoi(steps);
         counter++;
     }
+
+    printf("Enter Filename:");
+    fgets(line, buffer_size, stdin);
+    sscanf(line, " %s ", filename);
+    FILE *input = fopen(filename, "r");
+    if (!input)
+    {
+        printf("Error: invalid file\n");
+        return 1;
+    }
+
     
-    int arr[];
+    int arr[counter];
     int max = 0;
     int a = 0;
     int i;
 
     for (i = 0;i<counter;i++){
-        if data[i].steps>max;
-        max = data[i].steps;
-        arr[a] = i;
-        a += 1;
+        if (data[i].steps>max){
+            max = data[i].steps;
+            arr[a] = i;
+            a += 1;
+        }
     }
 
     FILE *file = fopen(filename.tsv, "r+");
