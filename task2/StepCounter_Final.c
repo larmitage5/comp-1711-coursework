@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,7 +53,7 @@ int main() {
     char date[100];
     char time[100];
     char steps[100];
-    int min = 1000000;
+    int min;
     int max = 0;
     int i = 0;
     int a;
@@ -113,7 +112,8 @@ int main() {
                     counter++;
                 }
                 a = 0;
-                for(i = 0; i<counter; i++)
+                min = data[0].steps;
+                for(i = 1; i<counter; i++)
                 {
                     if (data[i].steps<min)
                     {
@@ -121,7 +121,7 @@ int main() {
                         a = i;
                     }
                 }
-                printf("Fewest steps: %s %s\n", data[a].date, data[a].time);
+                printf("Fewest steps:%s %s\n", data[a].date, data[a].time);
                 break;
 
             case 'D':
