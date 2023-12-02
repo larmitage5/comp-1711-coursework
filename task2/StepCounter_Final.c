@@ -44,7 +44,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
 // Complete the main function
 int main() {
 
-    FITNESS_DATA data[100];
+    FITNESS_DATA data[200];
     int buffer_size = 250;
     char line[buffer_size];
     char filename[buffer_size];
@@ -121,7 +121,7 @@ int main() {
                         a = i;
                     }
                 }
-                printf("Fewest steps:%s %s\n", data[a].date, data[a].time);
+                printf("Fewest steps: %s %s\n", data[a].date, data[a].time);
                 break;
 
             case 'D':
@@ -160,7 +160,7 @@ int main() {
                 float counterf = counter;
                 mean = (sum/counterf);
                 meanint = (int)(mean+0.5);
-                printf("Mean step count:%d\n", meanint);
+                printf("Mean step count: %d\n", meanint);
                 break;
 
             case 'F':
