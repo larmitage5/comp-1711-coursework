@@ -59,6 +59,7 @@ int main() {
     char time[100];
     char steps[100];
     int i;
+    char nums[] = "0123456789-";
 
     printf("Enter Filename: ");
     fgets(line, buffer_size, stdin);
@@ -84,10 +85,32 @@ int main() {
             printf("Error: incorrect data\n");
             return 1;
         }
+    }
+    for (i=0;i<counter;i++){
         if (strlen(data[i].time) != 5 ){
             printf("Error: incorrect data\n");
             return 1;
         }
+    }
+    for (i=0;i<counter;i++){
+        if (strcspn(data[i].date,"-") != 4 ){
+            printf("Error: incorrect data\n");
+            return 1;
+        }
+    }
+    for (i=0;i<counter;i++){
+        if (strcspn(data[i].time,":") != 2 ){
+            printf("Error: incorrect data\n");
+            return 1;
+        }
+    }
+    for (i=0;i<counter;i++){
+        if (data[i].date != "[0-9999]-[0-12]-[0-31]"){
+            printf("Error: incorrect data\n");
+            return 1;
+        }
+    }
+    for (i=0;i<counter;i++){
         if (isdigit(data[i].steps) == 1){
             printf("Error: incorrect data\n");
             return 1;
@@ -95,28 +118,27 @@ int main() {
     }
     printf("File opened successfully\n");
 
-    int arr[counter];
+    int arr[100];
     int max = 0;
-    int a = 0;
+    int a;
+    int b = 0;
 
-    for (i = 0;i<counter;i++){
-        for (int j = i + 1; j<counter;j++){
-            if(arr[i]<arr[j]){
-                int k = arr[i];
-                arr[i] = arr[j];
-                arr[j] = k;
-            }
+    for (a = 3000;a>=0;a--){
+        for (i=0;i<counter;i++){
+            if (data[i].steps==a){
+            arr[b] = i;
+            b += 1;
+        }
         }
     }
 
-    FILE *file = fopen("FitnessData_2023.csv.tsv", "a+");
+    FILE *file = fopen("FitnessData_2023.csv.tsv", "w");
     if (file == NULL) {
         perror("");
         return 1;
     }
     for (i=0;i<counter;i++){
-        fprintf(file, "%s\t%s\t%d", data[arr[i]].date, data[arr[i]].time, data[arr[i]].steps);
-        printf("%s\t%s\t%d", data[arr[i]].date, data[arr[i]].time, data[arr[i]].steps);
+        fprintf(file, "%s\t%s\t%d\n", data[arr[i]].date, data[arr[i]].time, data[arr[i]].steps);
     }
     fclose(input);
     fclose(file);
