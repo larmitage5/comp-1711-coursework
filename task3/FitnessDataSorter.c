@@ -59,7 +59,10 @@ int main() {
     char time[100];
     char steps[100];
     int i;
+    int j;
     char nums[] = "0123456789-";
+    const char ch = '-';
+    const char cha = ':';
 
     printf("Enter Filename: ");
     fgets(line, buffer_size, stdin);
@@ -81,12 +84,6 @@ int main() {
     }
 
     for (i=0;i<counter;i++){
-        if(strlen(data[i].date) != 10){
-            printf("Error: incorrect data\n");
-            return 1;
-        }
-    }
-    for (i=0;i<counter;i++){
         if (strlen(data[i].time) != 5 ){
             printf("Error: incorrect data\n");
             return 1;
@@ -99,19 +96,63 @@ int main() {
         }
     }
     for (i=0;i<counter;i++){
+        for (j=0;j<counter;j++){
+            if (!isdigit(data[i].date[j]) && strchr(data[i].date, '-')==NULL){
+                printf("Error: incorrect data\n");
+                return 1;
+            }
+        }
+    }
+    for (i=0;i<counter;i++){
+        for (j=0;j<counter;j++){
+            if (!isdigit(data[i].time[j]) && strchr(data[i].time, ':')==NULL){
+                printf("Error: incorrect data\n");
+                return 1;
+            }
+        }
+    }
+    for (i=0;i<counter;i++){
+        if (data[i].date[4] != '-'){
+            return 1;
+        }
+        if (data[i].date[7] != '-'){
+            return 1;
+        }
+        if ((data[i].date[0] - '0')>2){
+            return 1;
+        }
+        if ((data[i].date[5] - '0')>1){
+            return 1;
+        }
+        if ((data[i].date[8] - '0')>3){
+            return 1;
+        }
+    }
+    for (i=0;i<counter;i++){
+        if (data[i].time[2] != ':'){
+            return 1;
+        }
+        if ((data[i].date[0] - '0') > 2){
+            return 1;
+        }
+        if ((data[i].date[3] - '0') > 5){
+            return 1;
+        }
+    }
+    for (i=0;i<counter;i++){
         if (strcspn(data[i].time,":") != 2 ){
             printf("Error: incorrect data\n");
             return 1;
         }
     }
     for (i=0;i<counter;i++){
-        if (data[i].date != "[0-9999]-[0-12]-[0-31]"){
+        if (isdigit(data[i].steps) == 1){
             printf("Error: incorrect data\n");
             return 1;
         }
     }
     for (i=0;i<counter;i++){
-        if (isdigit(data[i].steps) == 1){
+        if (strlen(data[i].date )!= 10){
             printf("Error: incorrect data\n");
             return 1;
         }
@@ -132,7 +173,7 @@ int main() {
         }
     }
 
-    FILE *file = fopen("FitnessData_2023.csv.tsv", "w");
+    FILE *file = fopen(strcat(filename, ".tsv"), "w");
     if (file == NULL) {
         perror("");
         return 1;
