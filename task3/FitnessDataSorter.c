@@ -85,18 +85,20 @@ int main() {
 
     for (i=0;i<counter;i++){
         if (strlen(data[i].time) != 5 ){
+            printf("Error: incorrect data\n");
             return 1;
         }
-
     }
     for (i=0;i<counter;i++){
         if (strcspn(data[i].date,"-") != 4 ){
+            printf("Error: incorrect data\n");
             return 1;
         }
     }
     for (i=0;i<counter;i++){
         for (j=0;j<counter;j++){
             if (!isdigit(data[i].date[j]) && strchr(data[i].date, '-')==NULL){
+                printf("Error: incorrect data\n");
                 return 1;
             }
         }
@@ -104,6 +106,7 @@ int main() {
     for (i=0;i<counter;i++){
         for (j=0;j<counter;j++){
             if (!isdigit(data[i].time[j]) && strchr(data[i].time, ':')==NULL){
+                printf("Error: incorrect data\n");
                 return 1;
             }
         }
@@ -124,9 +127,6 @@ int main() {
         if ((data[i].date[8] - '0')>3){
             return 1;
         }
-        if (atoi(strcat(data[i].date[5], data[i].date[6]))>12){
-            return 1;
-        }
     }
     for (i=0;i<counter;i++){
         if (data[i].time[2] != ':'){
@@ -141,24 +141,29 @@ int main() {
     }
     for (i=0;i<counter;i++){
         if (strcspn(data[i].time,":") != 2 ){
+            printf("Error: incorrect data\n");
             return 1;
         }
     }
     for (i=0;i<counter;i++){
         if (isdigit(data[i].steps) == 1){
+            printf("Error: incorrect data\n");
             return 1;
         }
     }
     for (i=0;i<counter;i++){
         if (strlen(data[i].date )!= 10){
+            printf("Error: incorrect data\n");
             return 1;
         }
     }
     for (i=0;i<counter;i++){
-        if (data[i].steps == '\n'){
+        if (data[i].steps == '\0'){
+            printf("Error: incorrect data\n");
             return 1;
         }
     }
+    printf("File opened successfully\n");
 
     int arr[100];
     int max = 0;
@@ -182,7 +187,6 @@ int main() {
     for (i=0;i<counter;i++){
         fprintf(file, "%s\t%s\t%d\n", data[arr[i]].date, data[arr[i]].time, data[arr[i]].steps);
     }
-    printf("Data sorted and written to FitnessData_2023.csv.tsv\n");
     fclose(input);
     fclose(file);
     return 0;
